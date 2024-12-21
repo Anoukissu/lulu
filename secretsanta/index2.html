@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Noël Lulu !</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('10.jpg'); /* Image de fond */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: url('cursor.cur'), auto;
+            overflow: hidden; /* Pour éviter les barres de défilement avec les animations */
+        }
+
+        iframe {
+            border: none;
+            width: 560px; /* Taille du lecteur */
+            height: 315px; /* Taille du lecteur */
+        }
+
+        .cursor-effect {
+            position: absolute;
+            pointer-events: none; /* Pour que l'élément ne bloque pas l'interaction */
+            z-index: 9999;
+            width: 50px; /* Taille de l'image */
+            height: 50px; /* Taille de l'image */
+            opacity: 0.8;
+            animation: followCursor 0.1s linear;
+        }
+
+        @keyframes followCursor {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -50px; /* Commence au-dessus de l'écran */
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh); /* Descend jusqu'en bas de l'écran */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Le lecteur YouTube intégré -->
+    <iframe src="https://www.youtube.com/embed/_vMWTfYZYRg?autoplay=1" 
+            allow="autoplay; encrypted-media">
+    </iframe>
+
+    <script>
+        // Fonction qui suit le curseur avec une animation
+        document.body.addEventListener('mousemove', function(e) {
+            let cursorEffect = document.createElement('img');
+            cursorEffect.src = 'lulu.png';  // Remplace 'snowman.png' par l'image de ton choix
+            cursorEffect.classList.add('cursor-effect');
+            cursorEffect.style.left = `${e.pageX - 25}px`; // Ajuster la position pour centrer l'image
+            cursorEffect.style.top = `${e.pageY - 25}px`; // Ajuster la position pour centrer l'image
+            document.body.appendChild(cursorEffect);
+
+            // Supprime l'élément après une petite animation
+            setTimeout(() => {
+                cursorEffect.remove();
+            }, 1000); // Durée de l'animation (ajuster si nécessaire)
+        });
+
+        // Créer des flocons de neige qui tombent
+        function createSnowflakes() {
+            let snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            
+            // Position aléatoire
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Vitesse aléatoire
+            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Délai aléatoire
+
+            document.body.appendChild(snowflake);
+
+            // Supprime les flocons après qu'ils ont fini de tomber
+            setTimeout(() => {
+                snowflake.remove();
+            }, 8000); // Temps avant de supprimer un flocon (ajuster selon la durée de l'animation)
+        }
+
+        // Crée des flocons de neige à intervalles réguliers
+        setInterval(createSnowflakes, 300); // Crée un flocon toutes les 300ms
+    </script>
+</body>
+</html>
